@@ -22,24 +22,23 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
     private SmeMapper smeDao;
 
     private List<SmeData> smeDataList = new ArrayList<SmeData>();
-    private SmeData smeData = new SmeData();
+    private SmeData smeData = null;
     private OmsForm omsForm = new OmsForm();
-    private Long formId;
+    private String formId;
 
     @Override
     public List<SmeData> process(YxjcData yxjcData) throws Exception {
-        //借用 Creator1 传递组织机构 ID
-        //smeData.setCreator1(yxjcData.getUserid());
-        //借用 Updator1 传递报表期
-        //smeData.setUpdator1(yxjcData.getBbq());
 
-        log.info("源数据：" + yxjcData);
+        //log.info("源数据：" + yxjcData);
+        formId = smeDao.getNewId();
+        omsForm.setId(formId);
         omsForm.setOrg_id(smeDao.getOrgId(yxjcData.getUserid()));
-        omsForm.setPeriod(yxjcData.getBbq());
-        formId = smeDao.saveOMS_form(omsForm);
-        smeData.setForm_id(formId.toString());
+        omsForm.setPeriod(yxjcData.getBbq().substring(0,6));
+        smeDao.saveOMS_form(omsForm);
 
         //销售收入
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getA11());
         smeData.setCurrent_year(yxjcData.getA12());
         smeData.setPre_month(yxjcData.getA13());
@@ -48,6 +47,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //利润总额
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getB11());
         smeData.setCurrent_year(yxjcData.getB12());
         smeData.setPre_month(yxjcData.getB13());
@@ -56,6 +57,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //从业人员数量
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getC11());
         smeData.setCurrent_year(yxjcData.getC12());
         smeData.setPre_month(yxjcData.getC13());
@@ -64,6 +67,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //出口交货值
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getD11());
         smeData.setCurrent_year(yxjcData.getD12());
         smeData.setPre_month(yxjcData.getD13());
@@ -72,6 +77,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //流动资产
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getE11());
         smeData.setCurrent_year(yxjcData.getE12());
         smeData.setPre_month(yxjcData.getE13());
@@ -80,6 +87,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //应收帐款
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getF11());
         smeData.setCurrent_year(yxjcData.getF12());
         smeData.setPre_month(yxjcData.getF13());
@@ -88,6 +97,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //产成品
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getG11());
         smeData.setCurrent_year(yxjcData.getG12());
         smeData.setPre_month(yxjcData.getG13());
@@ -96,6 +107,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //资产总计
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getH11());
         smeData.setCurrent_year(yxjcData.getH12());
         smeData.setPre_month(yxjcData.getH13());
@@ -104,6 +117,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //负债总计
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getI11());
         smeData.setCurrent_year(yxjcData.getI12());
         smeData.setPre_month(yxjcData.getI13());
@@ -112,6 +127,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //新增订单
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getJ11());
         smeData.setCurrent_year(yxjcData.getJ12());
         smeData.setPre_month(yxjcData.getJ13());
@@ -120,6 +137,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //应交税金
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getK11());
         smeData.setCurrent_year(yxjcData.getK12());
         smeData.setPre_month(yxjcData.getK13());
@@ -128,6 +147,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //所有者权益
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getL11());
         smeData.setCurrent_year(yxjcData.getL12());
         smeData.setPre_month(yxjcData.getL13());
@@ -136,6 +157,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //企业税收
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getM11());
         smeData.setCurrent_year(yxjcData.getM12());
         smeData.setPre_month(yxjcData.getM13());
@@ -144,6 +167,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //开工率
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getN11());
         smeData.setCurrent_year(yxjcData.getN12());
         smeData.setPre_month(yxjcData.getN13());
@@ -152,6 +177,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //资金缺口额
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getO11());
         smeData.setCurrent_year(yxjcData.getO12());
         smeData.setPre_month(yxjcData.getO13());
@@ -160,6 +187,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //主要产品价格波动定量
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getP11());
         smeData.setCurrent_year(yxjcData.getP12());
         smeData.setPre_month(yxjcData.getP13());
@@ -168,6 +197,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //主要原材料价格波动
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         smeData.setCurrent_month(yxjcData.getQ11());
         smeData.setCurrent_year(yxjcData.getQ12());
         smeData.setPre_month(yxjcData.getQ13());
@@ -176,6 +207,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //主要产品价格波动定性
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         if(yxjcData.getR() != null && yxjcData.getR().intValue() == 0)
             smeData.setValue("cp");
         else if(yxjcData.getR() != null && yxjcData.getR().intValue() == 1)
@@ -186,6 +219,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //主要成本价格波动定性
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         if(yxjcData.getS() != null && yxjcData.getS().intValue() == 0)
             smeData.setValue("cp");
         else if(yxjcData.getS() != null && yxjcData.getS().intValue() == 1)
@@ -196,6 +231,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //新增订单金额
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         if(yxjcData.getT() != null && yxjcData.getT().intValue() == 0)
             smeData.setValue("cp");
         else if(yxjcData.getT() != null && yxjcData.getT().intValue() == 1)
@@ -206,6 +243,8 @@ public class Processor implements ItemProcessor<YxjcData, List<SmeData>> {
         smeDataList.add(smeData);
 
         //对下个月公司经营状况的预判
+        smeData = new SmeData();
+        smeData.setForm_id(formId);
         if(yxjcData.getU() != null && yxjcData.getU().intValue() == 0)
             smeData.setValue("cp");
         else if(yxjcData.getU() != null && yxjcData.getU().intValue() == 1)

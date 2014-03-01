@@ -19,12 +19,12 @@ public class Reader implements ItemReader<YxjcData> {
 
     @Override
     public YxjcData read() throws Exception {
-        long start=System.currentTimeMillis();
+        //long start=System.currentTimeMillis();
         yxjcData = itemReader.read();
-        long end=System.currentTimeMillis();
-        log.info("------------------------------------------------------------------");
-        log.info("yxjcData: " + yxjcData);
-        log.info("查询时间："+(end-start));
+        //long end=System.currentTimeMillis();
+        //log.info("------------------------------------------------------------------");
+        //log.info("yxjcData: " + yxjcData);
+        //log.info("查询时间："+(end-start));
 
         return yxjcData;
     }

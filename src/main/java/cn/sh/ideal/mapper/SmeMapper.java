@@ -11,12 +11,14 @@ import org.springframework.stereotype.Repository;
 @Repository("smeDao")
 public interface SmeMapper {
 
-    @Insert("insert into oms_form_property values (#{form_id},#{property_id},#{current_month},#{current_year},#{pre_month},#{pre_year}),#{value}")
-    @SelectKey(before = false, keyProperty = "id", resultType = String.class, statementType = StatementType.STATEMENT, statement = "select newid()")
-    String saveOMS_form_property(SmeData data);
+    @Select("select newid()")
+    String getNewId();
 
-    @Insert("insert into oms_form values (#{org_id}, #{period})")
-    @SelectKey(before = true, keyProperty = "id", resultType = Long.class, statementType = StatementType.STATEMENT, statement = "SELECT SCOPE_IDENTITY()")
+    @Insert("insert into oms_form_property(id,form_id,property_id,current_month,current_year,pre_month,pre_year,value) "+
+            "values (#{id},#{form_id},#{property_id},#{current_month},#{current_year},#{pre_month},#{pre_year},#{value})")
+    Long saveOMS_form_property(SmeData data);
+
+    @Insert("insert into oms_form(id, org_id, period) values (#{id}, #{org_id}, #{period})")
     Long saveOMS_form(OmsForm omsForm);
 
     @Select("select GUID from PLATFORM_ENTERPRISE_INFO where ORG_CODE = #{org_code}")
